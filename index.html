@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Puppeteer.js</title>
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/black.css" />
+    <!-- 自定义文件 -->
+    <link rel="stylesheet" href="css/theme/index.css" />
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css" />
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.type = 'text/css'
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? 'css/print/pdf.css'
+        : 'css/print/paper.css'
+      document.getElementsByTagName('head')[0].appendChild(link)
+    </script>
+  </head>
+  <body>
+    <!-- none/fade/slide/convex/concave/zoom -->
+    <div class="reveal">
+      <div class="slides">
+        <section
+          data-background="#392f41"
+          data-transition="zoom"
+          data-separator="-l-"
+          data-separator-vertical="-n-"
+          data-separator-notes="^Note:"
+          data-markdown="./md/intro-pup.md"
+          data-state="changeImageSize"
+        ></section>
+        <section
+          data-background="#bbcdc5"
+          data-transition="zoom"
+          data-separator="-l-"
+          data-separator-vertical="-n-"
+          data-separator-notes="^Note:"
+          data-markdown="./md/install-pup.md"
+          data-state="changeImageSize"
+        ></section>
+        <section
+          data-background="#bbcdc5"
+          data-transition="zoom"
+          data-separator="-l-"
+          data-separator-vertical="-n-"
+          data-separator-notes="^Note:"
+          data-markdown="./md/base-pup.md"
+          data-state="changeImageSize"
+        ></section>
+        <section
+          data-background="#c0ebd7"
+          data-transition="zoom"
+          data-separator="-l-"
+          data-separator-vertical="-n-"
+          data-separator-notes="^Note:"
+          data-markdown="./md/api-pup.md"
+          data-state="changeImageSize"
+        ></section>
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // init
+      Reveal.initialize({
+        width: '100%',
+        height: '100%',
+        slideNumber: 'c/t',
+        minScale: 0.2,
+        maxScale: 1.5,
+        previewLinks: true,
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true }
+        ]
+      })
+      Reveal.addEventListener(
+        'changeImageSize',
+        function() {
+          let imgElem = document.getElementsByTagName('img')
+          for (let i = 0; i < imgElem.length; i++) {
+            const elem = imgElem[i]
+            let sizeArr = getImageSizeFn(elem)
+
+            for (let i = 0; i < sizeArr.length; i++) {
+              const item = sizeArr[i]
+              console.log(item)
+
+              elem.style[item.text] = item.value
+              elem.dataset.ischange = 1
+            }
+          }
+        },
+        false
+      )
+
+      function getImageSizeFn(elem) {
+        let url = elem.src,
+          arr = []
+
+        if (url.indexOf('?') == 1) return false
+        if (elem.dataset.ischange == 1) return false
+
+        url = url.split('?')
+        if (url[1]) {
+          url = url[1].split('&')
+          // 获取全部参数及其值
+          for (var i = 0; i < url.length; i++) {
+            var info = url[i].split('=')
+            var obj = {
+              text: info[0],
+              value: info[1]
+            }
+
+            arr.push(obj)
+          }
+        }
+        return arr
+      }
+    </script>
+    <script></script>
+  </body>
+</html>
